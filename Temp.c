@@ -1,27 +1,27 @@
 #include <stdio.h>
 #include <ctype.h>
 
-int main(){
-	char unit;
-	float temp;
+int main() {
+    char unit;
+    float temp;
 
-	printf("\n Is the temperature in  celsius (c) or Farhanet (F) : ");
-	scanf("%d",&temp);
+    printf("\nIs the temperature in Celsius (C) or Fahrenheit (F)? ");
+    scanf(" %c", &unit); 
+    unit = toupper(unit);
 
-	unit = toupper(unit);
+    if (unit == 'C') {
+        printf("\nEnter the temperature in Celsius: ");
+        scanf("%f", &temp);
 
-	if (unit == "C") {
-		printf("\n Enter the temperature in celsius : ");
-		scanf("%d",&temp);
-		temp = ((temp - 32) * 5) + 32;
-		printf("\nThe temperature in Frenheit is: %.1f",&temp);
-	}else if (unit == "F") {
-		printf("\n Enter the temperature in Farenheit : ");
-		scanf("%d",&unit);
-		temp = ((temp - 32) * 5) / 9;
-		printf("\n The temperature in celcius is : %.1f",&temp);
-	} else {
-		printf("\n %c is not a correct unit", &unit);
-	}
+        temp = (temp * 9 / 5) + 32;
+        printf("\nThe temperature in Fahrenheit is: %.1f\n", temp);
+    } else if (unit == 'F') {
+        printf("\nEnter the temperature in Fahrenheit: ");
+        scanf("%f", &temp);
+        temp = (temp - 32) * 5 / 9;
+        printf("\nThe temperature in Celsius is: %.1f\n", temp);
+    } else {
+        printf("\n%c is not a valid unit. Please enter 'C' or 'F'.\n", unit);
+    }
+    return 0;
 }
-
