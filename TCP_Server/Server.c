@@ -3,6 +3,7 @@
 #include <stdlib.h> 
 #include <sys/socket.h> //for socket APIs 
 #include <sys/types.h> 
+#include <string.h>
 
 int main(int argc, char const* argv[])
 {
@@ -26,16 +27,19 @@ int main(int argc, char const* argv[])
 
 	send(clientSocket, serMsg, sizeof(serMsg), 0);
 
-	int connectStatus 
-        = connect(sockD, (struct sockaddr*)&servAddr, 
-                  sizeof(servAddr)); 
+	char recvBuffer[255]; 
+    memset(recvBuffer, 0, sizeof(recvBuffer)); 
 
-	if (connectStatus == -1){
-		printf("Error .... \n");
-	} else }
-		char RecvstrData[255];
-        	recv(servSockD,RecvstrData, sizeof(RecvstrData), 0);
-        	printf("Message: %s\n", RecvstrData);
-	}
+    int bytesReceived = recv(clientSocket, recvBuffer, sizeof(recvBuffer) - 1, 0);  
+
+    if (bytesReceived < 0) {
+        perror("recv failed");
+        exit(1);
+    }
+
+    recvBuffer[bytesReceived] = '\0';
+
+    printf("Received from client: %s\n", recvBuffer);
+
 	return 0;
 }
